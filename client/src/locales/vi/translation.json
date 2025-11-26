@@ -92,6 +92,9 @@
   "connected_to_physician": "Bạn đã được kết nối với bác sĩ. Họ sẽ xem ca của bạn và phản hồi sớm.",
   "patient_requested_doctor": "Bệnh nhân đã yêu cầu nói chuyện với bác sĩ. Đây là thông tin ca bệnh của họ:",
   "no_active_chat": "Không có phiên trò chuyện đang hoạt động.",
-  "you_label": "Bạn"
+  "you_label": "Bạn",
+  "unknown_condition": "Tình trạng chưa xác định",
+  "unknown": "Chưa xác định",
+  "no_diagnosis_available": "Không có chẩn đoán sẵn có"
 }
 

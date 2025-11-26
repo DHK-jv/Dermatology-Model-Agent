@@ -70,9 +70,9 @@ const DiagnosisForm = ({ onDiagnosis }) => {
           response.data.diagnosis?.confidence_score || 0
         ),
         predicted_disease:
-          response.data.diagnosis?.predicted_disease || "Unknown",
+          response.data.diagnosis?.predicted_disease || t('unknown'),
         chatbot_response:
-          response.data.diagnosis?.chatbot_response || "No diagnosis available",
+          response.data.diagnosis?.chatbot_response || t('no_diagnosis_available'),
         suggested_actions: response.data.suggested_actions || [],
       };
 

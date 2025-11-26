@@ -42,7 +42,7 @@ const Chatbot = ({ diagnosis }) => {
         "diagnosis",
         {
           confidence,
-          condition: diagnosis.predicted_disease || "Unknown condition",
+          condition: diagnosis.predicted_disease || t('unknown_condition'),
         }
       );
     }
