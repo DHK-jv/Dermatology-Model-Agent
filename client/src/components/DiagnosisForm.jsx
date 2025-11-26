@@ -5,9 +5,11 @@ import { Upload } from "../assets";
 import { FiInfo } from "react-icons/fi";
 import Leftsection from "./Leftsection";
 import { useGlobalState } from "../context/Globalcontext";
+import { useTranslation } from 'react-i18next';
 
 const DiagnosisForm = ({ onDiagnosis }) => {
   const { state, dispatch } = useGlobalState();
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -28,7 +30,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!state.image || !state.symptoms.trim()) {
-      setError("Please provide both an image and symptom description.");
+      setError(t('please_provide_image_and_symptom'));
       return;
     }
 
@@ -81,7 +83,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
       console.error("Diagnosis error:", error);
       setError(
         error.response?.data?.message ||
-          "Failed to get diagnosis. Please try again."
+          t('failed_get_diagnosis')
       );
     } finally {
       setIsLoading(false);
@@ -108,14 +110,14 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 <img
                   src={state.imageURL}
                   className="absolute inset-0 w-full h-full object-cover"
-                  alt="Uploaded skin condition"
+                  alt={t('uploaded_skin_alt')}
                 />
                 <button
                   type="button"
                   onClick={triggerFileInput}
                   className="z-10 absolute bottom-2 right-2 bg-[#7096ff] px-3 py-1 rounded-[5px] shadow-sm hover:bg-[blue] transition-colors text-white font-bold ring-2 ring-white"
                 >
-                  Change Image
+                  {t('change_image')}
                 </button>
               </>
             ) : (
@@ -125,7 +127,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
               >
                 <img src={Upload} className="size-20" />
                 <p className="text-gray-500 font-medium">
-                  Click to upload skin image
+                  {t('click_to_upload')}
                 </p>
               </div>
             )}
@@ -141,7 +143,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-bold text-black mb-1">
-                Describe your symptoms
+                {t('describe_symptoms')}
               </label>
               <textarea
                 value={state.symptoms}
@@ -150,7 +152,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 }
                 rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                placeholder="E.g., 'Red, itchy rash on arms for 3 days...'"
+                placeholder={t('symptoms_placeholder')}
                 required
               />
             </div>
@@ -162,7 +164,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 }
                 name="username"
                 value={userDetails.username}
-                placeholder="Enter your Name here"
+                placeholder={t('enter_name')}
                 type="text"
                 className="border-gray-300 rounded-lg border-1 text-center h-10"
                 required
@@ -178,7 +180,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 }}
                 name="age"
                 value={userDetails.age}
-                placeholder="Enter your Age here"
+                placeholder={t('enter_age')}
                 type="number"
                 min="0"
                 max="120"
@@ -187,7 +189,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded">
+                <div className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded">
                 {error}
               </div>
             )}
@@ -220,21 +222,20 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Analyzing ({uploadProgress}%)
+                    {t('analyzing', { progress: uploadProgress })}
                   </>
                 ) : (
-                  "Get Diagnosis"
+                  t('get_diagnosis')
                 )}
               </button>
             </div>
           </form>
 
           <div className="mt-6 pt-4 border-t border-gray-200">
-            <div className="flex items-center text-sm text-black">
+              <div className="flex items-center text-sm text-black">
               <FiInfo className="mr-2 size-5 text-red-600" />
               <p>
-                For better results: Use clear, well-lit photos of the affected
-                area.
+                {t('for_better_results')}
               </p>
             </div>
           </div>

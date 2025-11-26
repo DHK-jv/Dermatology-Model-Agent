@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { FiSend, FiUser, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/Globalcontext";
+import { useTranslation } from 'react-i18next';
 
 const DoctorDashboard = () => {
   const { state, dispatch } = useGlobalState();
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -23,14 +25,13 @@ const DoctorDashboard = () => {
         patientId: 1,
         messages: [
           ...doctorData.chatHistory.map((msg) => ({
-            sender: msg.isBot ? "ai" : "patient",
+                sender: msg.isBot ? "ai" : "patient",
             content: msg.text,
             timestamp: new Date(msg.timestamp).toISOString(),
           })),
           {
             sender: "system",
-            content:
-              "Patient has requested to speak with a doctor. Here's their case information:",
+            content: t('patient_requested_doctor'),
             timestamp: new Date().toISOString(),
           },
         ],
@@ -137,17 +138,14 @@ Recommended next steps: Review patient history and provide treatment plan`,
       <div className="h-screen flex items-center justify-center">
         <div className="text-center p-8 bg-white rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-blue-800 mb-4">
-            No Active Patient Case
+            {t('no_active_patient_case')}
           </h2>
-          <p className="text-gray-600 mb-6">
-            Please wait for a patient to request a consultation or select an
-            existing case.
-          </p>
+          <p className="text-gray-600 mb-6">{t('please_wait_for_patient')}</p>
           <Link
             to="/"
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Return to Home
+            {t('return_to_home')}
           </Link>
         </div>
       </div>
@@ -164,7 +162,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
         >
           {mobileSidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
-        <h1 className="text-xl font-bold">Doctor Dashboard</h1>
+        <h1 className="text-xl font-bold">{t('doctor_dashboard')}</h1>
         <button
           onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
           className="p-1 rounded-md hover:bg-blue-700 transition cursor-pointer"
@@ -179,33 +177,33 @@ Recommended next steps: Review patient history and provide treatment plan`,
           mobileSidebarOpen ? "block" : "hidden"
         } md:block w-full md:w-64 bg-gradient-to-b from-blue-500 to-blue-800 text-white p-4 absolute md:relative z-10 h-full`}
       >
-        <h1 className="text-2xl font-bold mb-6 hidden md:block">Doctor View</h1>
+        <h1 className="text-2xl font-bold mb-6 hidden md:block">{t('doctor_view')}</h1>
 
         <div className="mb-6">
           <h2 className="text-lg font-semibold flex items-center mb-4">
-            <FiUser className="mr-2" /> Patient Information
+            <FiUser className="mr-2" /> {t('patient_information')}
           </h2>
           <div className="bg-blue-700/50 p-4 rounded-lg">
             <div className="font-medium mb-2">
-              {doctorData.user?.username || "Unknown Patient"}
+              {doctorData.user?.username || t('patient_label')}
             </div>
             <div className="text-sm mb-1">
-              <span className="font-semibold">Age:</span>{" "}
-              {doctorData.user?.age || "Not provided"}
+              <span className="font-semibold">{t('age_label')}</span>{" "}
+              {doctorData.user?.age || t('no_image_provided')}
             </div>
             <div className="text-sm mb-1">
-              <span className="font-semibold">Symptoms:</span>{" "}
-              {doctorData.symptoms || "Not provided"}
+              <span className="font-semibold">{t('symptoms_label')}</span>{" "}
+              {doctorData.symptoms || t('no_image_provided')}
             </div>
             <div className="text-sm">
-              <span className="font-semibold">AI Diagnosis:</span>{" "}
-              {doctorData.diagnosis?.predicted_disease || "Not available"}
+              <span className="font-semibold">{t('ai_diagnosis_label')}</span>{" "}
+              {doctorData.diagnosis?.predicted_disease || t('no_image_provided')}
             </div>
           </div>
         </div>
 
         <div className="mt-4 pt-4 border-t border-blue-400">
-          <h3 className="text-md font-semibold mb-2">Case Details</h3>
+            <h3 className="text-md font-semibold mb-2">{t('case_details')}</h3>
           <div className="text-sm space-y-2">
             <p>
               <span className="font-semibold">Messages:</span>{" "}
@@ -221,14 +219,13 @@ Recommended next steps: Review patient history and provide treatment plan`,
         <div className="bg-white p-4 border-b flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="mb-2 md:mb-0">
             <h2 className="text-xl font-bold text-blue-800">
-              {doctorData.user?.username || "Patient"}
+              {doctorData.user?.username || t('patient_label')}
             </h2>
             <p className="text-gray-700">
               {doctorData.user?.age
                 ? `${doctorData.user.age} years`
-                : "Age not provided"}{" "}
-              • AI Diagnosis:{" "}
-              {doctorData.diagnosis?.predicted_disease || "Not available"}
+                : t('no_image_provided')}{" "}
+              • {t('ai_diagnosis_label')}: {doctorData.diagnosis?.predicted_disease || t('no_image_provided')}
             </p>
           </div>
           <div className="flex flex-wrap gap-2 w-full md:w-auto">
@@ -237,7 +234,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
               onClick={analyzeCase}
               disabled={isAnalyzing}
             >
-              {isAnalyzing ? "Analyzing..." : "Analyze Case"}
+              {isAnalyzing ? t('analyzing') : t('analyze_case')}
             </button>
           </div>
         </div>
@@ -269,12 +266,12 @@ Recommended next steps: Review patient history and provide treatment plan`,
                     >
                       <div className="font-medium mb-1">
                         {msg.sender === "patient"
-                          ? "Patient"
+                          ? t('patient_label')
                           : msg.sender === "ai"
-                          ? "AI Assistant"
+                          ? t('ai_assistant_label')
                           : msg.sender === "system"
-                          ? "System"
-                          : "You"}
+                          ? t('system_label')
+                          : t('you_label')}
                       </div>
                       <div className="whitespace-pre-wrap">
                         {formatMessage(msg.content)}
@@ -308,7 +305,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type your response..."
+                placeholder={t('type_your_response')}
                 className="w-full p-2 md:p-3 focus:outline-none resize-none"
                 rows="1"
                 onKeyDown={(e) => {
@@ -338,7 +335,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-blue-800">
-            Case Attachments
+            {t('case_attachments') || 'Case Attachments'}
           </h2>
           <FiX
             onClick={() => setMobileToolsOpen(false)}
@@ -348,7 +345,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
         </div>
 
         <div>
-          <h3 className="font-medium mb-2 text-blue-900">Patient Image</h3>
+          <h3 className="font-medium mb-2 text-blue-900">{t('patient_image')}</h3>
           {doctorData.imageURL ? (
             <div className="bg-gray-100 p-2 rounded flex flex-col items-center cursor-pointer hover:bg-gray-200 transition">
               <div className="w-full h-40 bg-gray-200 mb-2 overflow-hidden">
@@ -358,29 +355,27 @@ Recommended next steps: Review patient history and provide treatment plan`,
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-sm text-gray-800">
-                Patient uploaded image
-              </span>
+              <span className="text-sm text-gray-800">{t('patient_uploaded_image')}</span>
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No image provided</p>
+            <p className="text-sm text-gray-500">{t('no_image_provided')}</p>
           )}
         </div>
 
         <div className="mt-6">
-          <h3 className="font-medium mb-2 text-blue-900">Diagnosis Details</h3>
+          <h3 className="font-medium mb-2 text-blue-900">{t('diagnosis_details')}</h3>
           <div className="bg-blue-50 p-3 rounded-lg">
             <p className="text-sm mb-1">
-              <span className="font-semibold">Condition:</span>{" "}
-              {doctorData.diagnosis?.predicted_disease || "Unknown"}
+              <span className="font-semibold">{t('condition_label')}</span>{" "}
+              {doctorData.diagnosis?.predicted_disease || t('no_image_provided')}
             </p>
             <p className="text-sm mb-1">
-              <span className="font-semibold">Confidence:</span>{" "}
+              <span className="font-semibold">{t('confidence_label')}</span>{" "}
               {doctorData.diagnosis?.confidence_score || "0"}%
             </p>
             <p className="text-sm">
-              <span className="font-semibold">AI Notes:</span>{" "}
-              {doctorData.diagnosis?.chatbot_response || "No additional notes"}
+              <span className="font-semibold">{t('ai_notes_label')}</span>{" "}
+              {doctorData.diagnosis?.chatbot_response || t('no_additional_notes')}
             </p>
           </div>
         </div>
@@ -390,7 +385,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
             to="/"
             className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
           >
-            Back to Home
+            {t('back_home')}
           </Link>
         </div>
       </div>

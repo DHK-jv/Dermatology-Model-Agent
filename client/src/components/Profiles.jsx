@@ -8,34 +8,33 @@ import {
 } from "../assets/Pics";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/Globalcontext";
+import { useTranslation } from 'react-i18next';
 
 function Profiles() {
   const { state } = useGlobalState();
   const [darkmode, setDarkMode] = useState(false);
+  const { t } = useTranslation();
 
   const team = [
     {
       image: comphortine,
       name: "Comphortine Siwende",
-      role: "Project Lead Developer | AI Engineer | Deep Leaning Enthusiast | Building Intelligent Systems | Django",
-      description:
-        "Project Lead Developer and AI Engineer focusing on building intelligent systems. Passionate about Deep Learning | Design AI solutions and create robust models. With expertise in Django REST.Have developed scalable and secure web applications integrating AI capabilities",
+      roleKey: "team.comphortine.role",
+      descriptionKey: "team.comphortine.desc",
       link: "https://github.com/COMFORTINE-SIWENDE",
     },
     {
       image: sheldon,
       name: "Sheldon Billy",
-      role: "Project Manager & Cloud Engineer | Frontend | Backend Developer | DL/ML Engineer | AI Integration Specialist | Full stack Software Developer",
-      description:
-        "leaded in coordinating tasks, managing timelines, and ensuring everything aligned with project goals.Specialized in configuring Microsoft Azure services & setting up cloud resources. Passionate in building modern, user-centric applications by intergrating front-end and back-end Technologies.",
+      roleKey: "team.sheldon.role",
+      descriptionKey: "team.sheldon.desc",
       link: "https://github.com/Sheldon-Billy",
     },
     {
       image: melvins,
       name: "Melvins Simon",
-      role: "UI/UX Designer & Frontend Developer | Information Technology Specialist | MERN & PERN stacks | AI & ML |",
-      description:
-        "Information Technology Specialis with extensive experience in the MERN and PERN stacks, specializing in building dynamic, scalable web applications.Strong background in AI and ML, leveraging these technologies to create data-driven solutions.Brought elegant designs and smooth user experiences. Using Tailwind CSS and React",
+      roleKey: "team.melvins.role",
+      descriptionKey: "team.melvins.desc",
       link: "https://github.com/Melvins-Simon",
     },
   ];
@@ -55,7 +54,7 @@ function Profiles() {
           to="/"
           className="text-[#107C10] hover:text-white hover:underline cursor-pointer mx-20"
         >
-          Back Home
+          {t('back_home')}
         </Link>
 
         <button
@@ -64,7 +63,7 @@ function Profiles() {
           }`}
           onClick={() => setDarkMode(!darkmode)}
         >
-          Theme {darkmode ? "🔵" : "⚫"}
+          {t('theme')} {darkmode ? "🔵" : "⚫"}
         </button>
       </div>
 
@@ -75,7 +74,7 @@ function Profiles() {
             : "bg-gradient-to-r from-[#a3dcff] via-[#1c7ed3] to-[#005A9E] text-transparent bg-clip-text"
         }`}
       >
-        Meet Our Team
+        {t('meet_our_team')}
       </h1>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-2">
@@ -100,9 +99,9 @@ function Profiles() {
                 {member.name}
               </h2>
               <p className="font-serif text-indigo-400 mb-2 font-medium text-center">
-                {member.role}
+                {t(member.roleKey)}
               </p>
-              <p className="mb-4 text-sm text-center">{member.description}</p>
+              <p className="mb-4 text-sm text-center">{t(member.descriptionKey)}</p>
             </div>
 
             <div className="items-center justify-center flex">
@@ -112,7 +111,7 @@ function Profiles() {
                 rel="noopener noreferrer"
                 className="bg-indigo-400 text-white text px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
               >
-                Connect
+                {t('connect')}
               </a>
             </div>
           </div>
@@ -122,17 +121,17 @@ function Profiles() {
       <footer className="text-center py-4 border-t text-sm text-[#ffffff] flex align-center justify-center items-center absolute bottom-0 w-full">
         <img
           src={azure}
-          alt="Azure"
+          alt={t('azure_alt')}
           className={`${state.screenWidth <= 428 ? "h-5 w-6" : "h-9 w-10"}`}
         />
         <h1 className="text-center ml-3 mt-2">&</h1>
         <img
           src={aifoundry}
-          alt="AI Foundry"
+          alt={t('ai_foundry_alt')}
           className={`${state.screenWidth <= 428 ? "h-6 w-11" : "h-13 w-15"}`}
         />
         &copy; {new Date().getFullYear()} @NestLink.Org
-        <span className="align-super text-xs">™</span>. All rights reserved.
+        <span className="align-super text-xs">™</span>. {t('all_rights_reserved')}
       </footer>
     </div>
   );

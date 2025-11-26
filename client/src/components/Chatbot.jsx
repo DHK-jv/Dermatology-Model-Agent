@@ -3,6 +3,7 @@ import axios from "axios";
 import { Loader, Bot, User, Sparkles, Send } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { useGlobalState } from "../context/Globalcontext";
+import { useTranslation } from 'react-i18next';
 
 const Chatbot = ({ diagnosis }) => {
   const { state, dispatch } = useGlobalState();
@@ -12,6 +13,7 @@ const Chatbot = ({ diagnosis }) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const chatContainerRef = useRef(null);
   const thinkingMessageIdRef = useRef(null);
+  const { t } = useTranslation();
 
   // Initialize with welcome message if chat is empty
   useEffect(() => {
@@ -20,7 +22,7 @@ const Chatbot = ({ diagnosis }) => {
         type: "ADD_MESSAGE",
         payload: {
           id: Date.now(),
-          text: "Hello! I'm your dermatology assistant. How can I help you today?",
+          text: t('welcome_message') || '',
           timestamp: new Date(),
           isBot: true,
           type: "text",
@@ -35,7 +37,7 @@ const Chatbot = ({ diagnosis }) => {
     if (diagnosis) {
       const confidence = Math.round(diagnosis.confidence_score || 0);
       simulateTyping(
-        diagnosis.chatbot_response || "Here's your diagnosis analysis",
+        diagnosis.chatbot_response || t("what_i_found") || "",
         diagnosis.suggested_actions || [],
         "diagnosis",
         {
@@ -137,7 +139,7 @@ const Chatbot = ({ diagnosis }) => {
         type: "ADD_MESSAGE",
         payload: {
           id: thinkingMessageIdRef.current,
-          text: "thinking...",
+          text: t('thinking') || '...',
           timestamp: new Date(),
           isBot: true,
           isTyping: true,
@@ -165,7 +167,7 @@ const Chatbot = ({ diagnosis }) => {
       });
       const { chat_response, suggested_actions } = response.data;
       simulateTyping(
-        chat_response?.chatbot_response || "Here's what I found:",
+        chat_response?.chatbot_response || t('what_i_found') || "",
         suggested_actions || [],
         "text"
       );
@@ -178,7 +180,7 @@ const Chatbot = ({ diagnosis }) => {
         });
       }
       simulateTyping(
-        "Sorry, I encountered an error. Please try again.",
+        t('error_try_again') || 'Error',
         [],
         "error"
       );
@@ -190,9 +192,9 @@ const Chatbot = ({ diagnosis }) => {
   const handleQuickAction = (action) => {
     const actionMessages = {
       alternative_treatments:
-        "What are some alternative treatments for my condition?",
-      learn_more: "Can you tell me more about this condition?",
-      ask_specialist: "When should I consult a specialist about this?",
+        t('alternative_treatments') || 'What are some alternative treatments for my condition?',
+      learn_more: t('learn_more') || 'Can you tell me more about this condition?',
+      ask_specialist: t('ask_specialist') || 'When should I consult a specialist about this?',
     };
     setInputValue(actionMessages[action] || action);
   };
@@ -213,12 +215,12 @@ const Chatbot = ({ diagnosis }) => {
     localStorage.setItem("doctorData", JSON.stringify(doctorData));
 
     const systemMessage = {
-      id: Date.now(),
-      text: "Connecting you to a physician...",
-      timestamp: new Date(),
-      isBot: true,
-      type: "system",
-    };
+        id: Date.now(),
+        text: t('connecting_you_to_physician'),
+        timestamp: new Date(),
+        isBot: true,
+        type: "system",
+      };
     dispatch({ type: "ADD_MESSAGE", payload: systemMessage });
 
     setTimeout(() => {
@@ -229,7 +231,7 @@ const Chatbot = ({ diagnosis }) => {
         payload: {
           id: systemMessage.id,
           updates: {
-            text: "You are now connected to a physician. They will review your case and respond shortly.",
+                text: t('connected_to_physician'),
           },
         },
       });
@@ -261,9 +263,9 @@ const Chatbot = ({ diagnosis }) => {
           <Bot size={20} />
         </div>
         <div>
-          <h2 className="text-lg font-semibold">Dermatology Assistant</h2>
+          <h2 className="text-lg font-semibold">{t('ai_dermatology_assistant')}</h2>
           <p className="text-xs opacity-80">
-            {isTyping ? "Typing..." : "Online"}
+            {isTyping ? t('typing') : t('online')}
           </p>
         </div>
       </div>
@@ -311,7 +313,7 @@ const Chatbot = ({ diagnosis }) => {
                   {message.isDoctor && (
                     <div className="flex items-center mb-1">
                       <span className="text-xs font-semibold text-green-600">
-                        PHYSICIAN RESPONSE:
+                        {t('physician_response_label')}
                       </span>
                     </div>
                   )}
@@ -319,8 +321,8 @@ const Chatbot = ({ diagnosis }) => {
                     <div className="flex items-center mb-2">
                       <Sparkles size={16} className="text-yellow-500 mr-1" />
                       <span className="text-xs font-semibold text-blue-600">
-                        DIAGNOSIS: {message.condition} ({message.confidence}%
-                        confidence)
+                        {t('diagnosis_label')}: {message.condition} ({message.confidence}%
+                        {" "}{t('confidence_label')})
                       </span>
                     </div>
                   )}
@@ -344,7 +346,7 @@ const Chatbot = ({ diagnosis }) => {
                   {message.suggestedActions?.length > 0 && (
                     <div className="mt-2 pt-2 border-t border-gray-100">
                       <p className="text-xs text-gray-500 mb-1">
-                        Quick actions:
+                        {t('quick_actions')}
                       </p>
                       <div className="flex flex-wrap gap-1">
                         {message.suggestedActions.map((action, idx) => (
@@ -388,12 +390,12 @@ const Chatbot = ({ diagnosis }) => {
           {state.physicianButtonState === "connecting" ? (
             <>
               <Loader className="animate-spin" size={16} />
-              Connecting and redirecting...
+              {t('connecting_and_redirecting')}
             </>
           ) : state.physicianButtonState === "connected" ? (
-            "Connected ✓"
+            t('connected')
           ) : (
-            "Chat to doctor"
+            t('chat_to_doctor')
           )}
         </button>
         <div className="grid grid-cols-[8.7fr_1fr] gap-2 w-[97%] mx-auto">
@@ -403,7 +405,7 @@ const Chatbot = ({ diagnosis }) => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="flex-1 px-4 py-2 bg-gray-50 rounded-md w-full outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Type your question..."
+              placeholder={t('type_your_question')}
               disabled={isLoading || isTyping}
             />
           </div>
