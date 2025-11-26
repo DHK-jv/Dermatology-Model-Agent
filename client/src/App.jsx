@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
+import './i18n';
 import Header from "./components/Header";
 import Chatbot from "./components/Chatbot";
 import DiagnosisForm from "./components/DiagnosisForm";
 import { v4 as uuidv4 } from "uuid";
 import Up from "./components/Up.jsx";
 import { Routes, Route } from "react-router-dom";
-import Profiles from "./components/Profiles.jsx";
 import DoctorDashboard from "./components/DoctorDashboard.jsx";
 import { useGlobalState } from "./context/Globalcontext.jsx";
 
 const Home = () => {
   const { state } = useGlobalState();
-  const [diagnosis, setDiagnosis] = useState(null);
   const [sessionId, setSessionId] = useState("");
 
   useEffect(() => {
@@ -23,34 +22,35 @@ const Home = () => {
     setSessionId(storedSessionId);
   }, []);
 
-  const handleDiagnosis = (data) => {
-    setDiagnosis(data);
-  };
-
   return (
     <>
       <Header />
       <div
-        className={`pt-20 bg-gradient-to-br from-[#50E6FF] to-[#F3F2F1] ${
-          state.screenWidth >= 1164 ? "h-screen" : "h-max flex flex-col"
-        } overflow-hidden`}
+        className={`pt-20 bg-gradient-to-br from-blue-50 to-purple-100 min-h-screen ${
+          state.screenWidth >= 1164 ? "grid grid-rows-[auto_1fr] gap-4" : "flex flex-col"
+        }`}
       >
-        {state.screenWidth <= 1164 && (
+        {/* Phần giới thiệu - chỉ hiển thị một lần */}
+        {state.screenWidth <= 1164 ? (
           <div className="w-full">
             <Up />
           </div>
+        ) : (
+          <div className="w-full px-4">
+            <Up />
+          </div>
         )}
+        
+        {/* Phần nội dung chính */}
         <div
-          className={`mx-auto grid ${
-            state.screenWidth >= 1164 && "grid-cols-[2fr_1fr] gap-3"
-          } ${state.screenWidth <= 1405 ? "w-[95%]" : "w-[80%]"} ${
-            state.screenWidth <= 815
-              ? "grid-rows-2 h-max"
-              : "grid-cols-2 h-full"
-          }`}
+          className={`mx-auto flex-1 grid gap-4 ${
+            state.screenWidth <= 815 
+              ? "grid-rows-2" 
+              : "grid-cols-2"
+          } ${state.screenWidth <= 1405 ? "w-[95%]" : "w-[80%]"} pb-4 overflow-hidden`}
         >
-          <DiagnosisForm onDiagnosis={handleDiagnosis} sessionId={sessionId} />
-          <Chatbot diagnosis={diagnosis} sessionId={sessionId} />
+          <DiagnosisForm sessionId={sessionId} />
+          <Chatbot sessionId={sessionId} />
         </div>
       </div>
     </>
@@ -61,7 +61,6 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Home />} path="/" exact />
-      <Route element={<Profiles />} path="/about" />
       <Route element={<DoctorDashboard />} path="/DoctorDashboard" />
     </Routes>
   );

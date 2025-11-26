@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FiHeart, FiMessageSquare, FiShield } from "react-icons/fi";
-import { azure, aifoundry } from "../assets";
 import { useTranslation } from 'react-i18next';
 
 const TypingEffect = ({ text, speed = 100, delay = 1000, onComplete }) => {
@@ -45,7 +44,7 @@ const Leftsection = () => {
         )}
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-6 flex flex-col items-center">
         <div className="flex items-start space-x-4 text-white border-1 p-2 backdrop-blur-sm  rounded-2xl">
           <FiShield className=" mt-1 flex-shrink-0" size={20} />
           <div>
@@ -71,11 +70,6 @@ const Leftsection = () => {
         </div>
       </div>
 
-      <div className="mt-12 flex justify-between items-center space-x-6 opacity-75">
-        <img src={azure} alt={t('azure_alt')} className="size-30" />
-        <h1 className="font-bold text-4xl">&</h1>
-        <img src={aifoundry} alt={t('ai_foundry_alt')} className="size-40" />
-      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ AZURE_AI_SEARCH_ENDPOINT=os.getenv("AZURE_AI_SEARCH_ENDPOINT")
 BOOTSTRAP_SERVER=os.getenv("BOOTSTRAP_SERVER")
 SASL_USERNAME=os.getenv("SASL_USERNAME")
 TOPIC=os.getenv("TOPIC")
-SASL_PASSWORD=os.getenv("")
+SASL_PASSWORD=os.getenv("SASL_PASSWORD")
 
 
 
@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#&l2y6hf120%d^@b-h%%=y^ghzy2-f_40x$$d_vxvyr#&6d0mg'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

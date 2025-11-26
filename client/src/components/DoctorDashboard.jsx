@@ -13,19 +13,26 @@ const DoctorDashboard = () => {
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
   const chatEndRef = useRef(null);
 
-  const [doctorData, setDoctorData] = useState(() => {
-    const savedData = localStorage.getItem("doctorData");
-    return savedData ? JSON.parse(savedData) : state.doctorData;
-  });
+  const [doctorData, setDoctorData] = useState(null);
+  const [activeChat, setActiveChat] = useState(null);
 
-  const [activeChat, setActiveChat] = useState(() => {
+  useEffect(() => {
+    const savedData = localStorage.getItem("doctorData");
+    if (savedData) {
+        setDoctorData(JSON.parse(savedData));
+    } else if (state.doctorData) {
+        setDoctorData(state.doctorData);
+    }
+  }, [state.doctorData]);
+
+  useEffect(() => {
     if (doctorData) {
-      return {
+      setActiveChat({
         id: 1,
         patientId: 1,
         messages: [
           ...doctorData.chatHistory.map((msg) => ({
-                sender: msg.isBot ? "ai" : "patient",
+            sender: msg.isBot ? "ai" : "patient",
             content: msg.text,
             timestamp: new Date(msg.timestamp).toISOString(),
           })),
@@ -36,10 +43,9 @@ const DoctorDashboard = () => {
           },
         ],
         images: doctorData.imageURL ? ["patient_image"] : [],
-      };
+      });
     }
-    return null;
-  });
+  }, [doctorData, t]);
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -109,12 +115,11 @@ const DoctorDashboard = () => {
       setIsAnalyzing(false);
       const analysisMessage = {
         sender: "system",
-        content: `Analysis complete based on patient data:
-- Primary condition: ${doctorData.diagnosis?.predicted_disease || "Unknown"}
-- Confidence: ${doctorData.diagnosis?.confidence_score || 0}%
-- Symptoms: ${doctorData.symptoms}
-        
-Recommended next steps: Review patient history and provide treatment plan`,
+        content: t('analysis_complete', {
+          condition: doctorData.diagnosis?.predicted_disease || t('unknown'),
+          confidence: doctorData.diagnosis?.confidence_score || 0,
+          symptoms: doctorData.symptoms
+        }),
         timestamp: new Date().toISOString(),
       };
 
@@ -188,7 +193,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
               {doctorData.user?.username || t('patient_label')}
             </div>
             <div className="text-sm mb-1">
-              <span className="font-semibold">{t('age_label')}</span>{" "}
+              <span className="font-semibold">{t('age_label')}</span>
               {doctorData.user?.age || t('no_image_provided')}
             </div>
             <div className="text-sm mb-1">
@@ -206,7 +211,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
             <h3 className="text-md font-semibold mb-2">{t('case_details')}</h3>
           <div className="text-sm space-y-2">
             <p>
-              <span className="font-semibold">Messages:</span>{" "}
+              <span className="font-semibold">{t('messages_label')}</span>{" "}
               {activeChat?.messages.length || 0}
             </p>
           </div>
@@ -223,9 +228,9 @@ Recommended next steps: Review patient history and provide treatment plan`,
             </h2>
             <p className="text-gray-700">
               {doctorData.user?.age
-                ? `${doctorData.user.age} years`
+                ? t('years', { age: doctorData.user.age })
                 : t('no_image_provided')}{" "}
-              • {t('ai_diagnosis_label')}: {doctorData.diagnosis?.predicted_disease || t('no_image_provided')}
+              • {t('ai_diagnosis_label')} {doctorData.diagnosis?.predicted_disease || t('no_image_provided')}
             </p>
           </div>
           <div className="flex flex-wrap gap-2 w-full md:w-auto">
@@ -292,7 +297,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
               </div>
             ) : (
               <div className="h-full flex items-center justify-center text-gray-500">
-                No active chat session
+                {t('no_active_chat_session')}
               </div>
             )}
           </div>
@@ -335,7 +340,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-blue-800">
-            {t('case_attachments') || 'Case Attachments'}
+            {t('case_attachments')}
           </h2>
           <FiX
             onClick={() => setMobileToolsOpen(false)}
@@ -351,7 +356,7 @@ Recommended next steps: Review patient history and provide treatment plan`,
               <div className="w-full h-40 bg-gray-200 mb-2 overflow-hidden">
                 <img
                   src={doctorData.imageURL}
-                  alt="Patient condition"
+                  alt={t('patient_condition_alt')}
                   className="w-full h-full object-contain"
                 />
               </div>

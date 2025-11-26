@@ -1,13 +1,11 @@
-// 2. Diagnosis.jsx (optimized)
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Upload } from "../assets";
 import { FiInfo } from "react-icons/fi";
-import Leftsection from "./Leftsection";
 import { useGlobalState } from "../context/Globalcontext";
 import { useTranslation } from 'react-i18next';
 
-const DiagnosisForm = ({ onDiagnosis }) => {
+const DiagnosisForm = () => {
   const { state, dispatch } = useGlobalState();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +19,6 @@ const DiagnosisForm = ({ onDiagnosis }) => {
 
   const handleFileChange = (file) => {
     if (!file) return;
-
     dispatch({ type: "SET_IMAGE", payload: file });
     const url = URL.createObjectURL(file);
     dispatch({ type: "SET_IMAGE_URL", payload: url });
@@ -78,7 +75,6 @@ const DiagnosisForm = ({ onDiagnosis }) => {
 
       dispatch({ type: "SET_DIAGNOSIS", payload: processedResponse });
       dispatch({ type: "SET_USER", payload: userDetails });
-      onDiagnosis(processedResponse);
     } catch (error) {
       console.error("Diagnosis error:", error);
       setError(
@@ -96,15 +92,14 @@ const DiagnosisForm = ({ onDiagnosis }) => {
   };
 
   return (
-    <div className="min-h-screen p-4 w-full">
-      <div
-        className={`w-full bg-white rounded-2xl shadow-[0_0_10px_1px_grey] overflow-hidden ${
-          state.screenWidth >= 1164 ? "grid grid-cols-2" : ""
-        } h-[90%]`}
-      >
-        {state.screenWidth >= 1164 && <Leftsection />}
-        <div className="p-8 flex flex-col">
-          <div className="relative h-64 mb-6 rounded-xl overflow-hidden border-2 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center">
+    <div className="h-full p-4 w-full flex flex-col items-center justify-center">
+      {/* Container chính đã được sửa lại layout để bỏ grid 2 cột */}
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col h-auto max-h-full">
+        
+
+        <div className="p-6 flex flex-col flex-1 overflow-y-auto">
+          {/* Khu vực upload ảnh */}
+          <div className="relative h-48 mb-4 rounded-xl overflow-hidden border-2 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center flex-shrink-0">
             {state.imageURL ? (
               <>
                 <img
@@ -125,7 +120,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 className="w-full h-full flex flex-col items-center justify-center p-4 text-center cursor-pointer"
                 onClick={triggerFileInput}
               >
-                <img src={Upload} className="size-20" />
+                <img src={Upload} className="size-20" alt="Upload Icon" />
                 <p className="text-gray-500 font-medium">
                   {t('click_to_upload')}
                 </p>
@@ -140,7 +135,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
             />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
             <div>
               <label className="block text-sm font-bold text-black mb-1">
                 {t('describe_symptoms')}
@@ -150,14 +145,14 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 onChange={(e) =>
                   dispatch({ type: "SET_SYMPTOMS", payload: e.target.value })
                 }
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
                 placeholder={t('symptoms_placeholder')}
                 required
               />
             </div>
 
-            <div className="w-full px-3 py-2 border border-gray-400 rounded-lg transition-all flex flex-col gap-2">
+            <div className="flex gap-4">
               <input
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, username: e.target.value })
@@ -166,7 +161,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 value={userDetails.username}
                 placeholder={t('enter_name')}
                 type="text"
-                className="border-gray-300 rounded-lg border-1 text-center h-10"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 required
               />
 
@@ -184,17 +179,17 @@ const DiagnosisForm = ({ onDiagnosis }) => {
                 type="number"
                 min="0"
                 max="120"
-                className="border-gray-300 rounded-lg border-1 text-center h-10"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
 
             {error && (
-                <div className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded">
+              <div className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded">
                 {error}
               </div>
             )}
 
-            <div className="pt-2">
+            <div className="pt-2 mt-auto">
               <button
                 type="submit"
                 disabled={isLoading}
@@ -232,7 +227,7 @@ const DiagnosisForm = ({ onDiagnosis }) => {
           </form>
 
           <div className="mt-6 pt-4 border-t border-gray-200">
-              <div className="flex items-center text-sm text-black">
+            <div className="flex items-center text-sm text-black">
               <FiInfo className="mr-2 size-5 text-red-600" />
               <p>
                 {t('for_better_results')}

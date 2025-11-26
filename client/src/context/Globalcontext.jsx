@@ -2,6 +2,19 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 
 const GlobalStateContext = createContext();
 
+const getSharedChatFromStorage = () => {
+  const storedChat = localStorage.getItem("sharedChat");
+  if (!storedChat) {
+    return [];
+  }
+  try {
+    return JSON.parse(storedChat);
+  } catch (error) {
+    console.error("Error parsing sharedChat from localStorage", error);
+    return [];
+  }
+};
+
 const initialState = {
   user: null,
   image: null,
@@ -12,7 +25,7 @@ const initialState = {
   doctorData: null,
   screenWidth: window.innerWidth,
   activeSession: null,
-  sharedChat: JSON.parse(localStorage.getItem("sharedChat")) || [],
+  sharedChat: getSharedChatFromStorage(),
   physicianRequest: null,
   physicianButtonState: "disconnected",
 };

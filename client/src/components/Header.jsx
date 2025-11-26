@@ -1,46 +1,39 @@
 import React from "react";
-import { Logo } from "../assets";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/Globalcontext";
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const { state } = useGlobalState();
   const { screenWidth } = state;
+  const { t } = useTranslation();
 
   return (
-    <nav className="w-full h-18 shadow-2xl z-20 fixed top-0 bg-gray-100">
+    <nav className="w-full h-20 shadow-lg z-20 fixed top-0 bg-gradient-to-r from-blue-600 to-purple-600">
       <div
-        className={`flex items-center justify-between ${
+        className={`h-full flex items-center justify-between px-6 ${
           screenWidth <= 660 ? "w-full" : "w-[80%] mx-auto"
         }`}
       >
-        <div>
-          <img src={Logo} width={90} height={80} alt="Company Logo" />
+        <div className="flex items-center">
+          <Link to="/" className="cursor-pointer">
+            <span
+              className={`font-semibold text-white transition-colors hover:text-blue-100 ${
+                screenWidth <= 800 ? "text-lg" : "text-xl"
+              }`}
+            >
+              {t('dermatology_assistant_title')}
+            </span>
+          </Link>
         </div>
 
-        <div>
-          <span
-            className={`font-lite font-extrabold bg-gradient-to-r from-[hsl(240,100%,50%)] via-[hsl(120,100%,42%)] to-[hsl(240,100%,50%)] w-max text-transparent bg-clip-text ${
-              screenWidth <= 800 ? "text-[16px]" : "text-[20px]"
-            }`}
-          >
-            {/* {screenWidth <= 1059 ? "AI Agents" : "AI Agents Hackathon 2025"} */}
-          </span>
-        </div>
-
-        <div>
+        <div className="flex items-center">
           <Link
             to="/DoctorDashboard"
-            className="p-3 text-[hsl(240,91%,70%)] font-semibold hover:underline hover:text-[blue]"
+            className="px-4 py-2 text-white font-medium hover:bg-white/10 rounded-lg transition-colors duration-200"
           >
-            Doctor Dashboard
+            {t('doctor_dashboard')}
           </Link>
-          {/* <Link
-            to="/about"
-            className="p-3 text-[hsl(240,91%,70%)] font-semibold hover:underline hover:text-[blue]"
-          >
-            Meet our team
-          </Link> */}
         </div>
       </div>
     </nav>

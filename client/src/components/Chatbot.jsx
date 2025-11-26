@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useGlobalState } from "../context/Globalcontext";
 import { useTranslation } from 'react-i18next';
 
-const Chatbot = ({ diagnosis }) => {
+const Chatbot = () => {
   const { state, dispatch } = useGlobalState();
+  const { diagnosis } = state;
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -253,9 +254,7 @@ const Chatbot = ({ diagnosis }) => {
 
   return (
     <div
-      className={`flex flex-col ${
-        state.screenWidth <= 1164 ? "h-[49.5rem]" : "h-[87%]"
-      } mt-4 w-full mx-auto rounded-xl shadow-[0_0_10px_1px_grey] overflow-hidden relative`}
+      className={`flex flex-col h-full mt-4 w-full mx-auto rounded-xl shadow-lg overflow-hidden relative bg-white`}
     >
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex items-center">
@@ -373,16 +372,16 @@ const Chatbot = ({ diagnosis }) => {
       {/* Input area */}
       <form
         onSubmit={handleSubmit}
-        className="pb-2 border-t border-white w-full bg-cyan-100 h-max flex flex-col gap-2"
+        className="p-4 border-t bg-white"
       >
         <button
           type="button"
-          className={`font-semibold px-3 py-1 text-sm text-white flex items-center gap-2 cursor-pointer transition-colors justify-center ${
+          className={`w-full font-semibold px-3 py-2 text-sm text-white flex items-center gap-2 cursor-pointer transition-colors justify-center rounded-md mb-2 ${
             state.physicianButtonState === "connecting"
               ? "bg-blue-400 animate-pulse"
               : state.physicianButtonState === "connected"
               ? "bg-green-500"
-              : "bg-gradient-to-r from-transparent via-blue-500 to-transparent hover:bg-blue-600"
+              : "bg-blue-500 hover:bg-blue-600"
           }`}
           onClick={handleDoctorRequest}
           disabled={isConnecting || state.physicianButtonState === "connected"}
@@ -398,25 +397,22 @@ const Chatbot = ({ diagnosis }) => {
             t('chat_to_doctor')
           )}
         </button>
-        <div className="grid grid-cols-[8.7fr_1fr] gap-2 w-[97%] mx-auto">
-          <div className="flex justify-center items-center">
+        <div className="flex items-center gap-2">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="flex-1 px-4 py-2 bg-gray-50 rounded-md w-full outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-lg w-full outline-none focus:ring-2 focus:ring-blue-500"
               placeholder={t('type_your_question')}
               disabled={isLoading || isTyping}
             />
-          </div>
-          <div className="flex justify-center items-center">
             <button
               type="submit"
               disabled={isLoading || isTyping || inputValue.trim() === ""}
-              className={`p-2 rounded-full ${
+              className={`p-3 rounded-lg ${
                 isLoading || isTyping || inputValue.trim() === ""
-                  ? "bg-gradient-to-r from-blue-500/50 to-purple-500/50 text-white"
-                  : "text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+                  ? "bg-gray-300 text-gray-500"
+                  : "text-white bg-blue-500 hover:bg-blue-600"
               }`}
             >
               {isLoading ? (
@@ -425,7 +421,6 @@ const Chatbot = ({ diagnosis }) => {
                 <Send size={18} />
               )}
             </button>
-          </div>
         </div>
       </form>
     </div>

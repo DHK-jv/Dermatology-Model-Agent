@@ -1,13 +1,11 @@
 {
-  "logo_alt": "Logo công ty",
   "doctor_dashboard": "Bảng điều khiển Bác sĩ",
   "get_diagnosis": "Nhận chẩn đoán",
   "connect_doctor": "Kết nối với bác sĩ",
   "upload_image": "Tải ảnh lên",
   "drag_drop": "Kéo và thả ảnh ở đây",
   "submit": "Gửi",
-  "cancel": "Hủy"
-  ,
+  "cancel": "Hủy",
   "uploaded_skin_alt": "Ảnh vùng da đã tải lên",
   "change_image": "Thay ảnh",
   "click_to_upload": "Nhấn để tải ảnh vùng da",
@@ -20,6 +18,7 @@
   "analyzing": "Đang phân tích ({{progress}}%)",
   "for_better_results": "Để có kết quả tốt hơn: Sử dụng ảnh rõ nét, đủ sáng của vùng bị ảnh hưởng.",
   "dermatology_assistant": "Trợ lý Da liễu",
+  "dermatology_assistant_title": "Trợ lý Da liễu",
   "typing": "Đang gõ...",
   "online": "Trực tuyến",
   "quick_actions": "Hành động nhanh:",
@@ -32,7 +31,7 @@
   "what_i_found": "Đây là những gì tôi tìm thấy:",
   "ai_dermatology_assistant": "Trợ lý Da liễu AI",
   "get_instant_analysis": "Nhận phân tích tình trạng da ngay lập tức, được hỗ trợ bởi Azure AI",
-  "privacy_first": "Bảo mật là trên hết",
+  "privacy_first": "Bảo mật an toàn",
   "privacy_desc": "Ảnh của bạn được xử lý an toàn và không lưu trữ vĩnh viễn.",
   "expert_insights": "Góc nhìn chuyên gia",
   "expert_desc": "AI cung cấp phân tích sơ bộ dựa trên chuyên môn da liễu.",
@@ -40,13 +39,11 @@
   "interactive_desc": "Nhận tư vấn cá nhân và câu hỏi theo dõi sau chẩn đoán.",
   "back_home": "Quay về Trang chủ",
   "theme": "Giao diện",
-  "meet_our_team": "Gặp đội ngũ của chúng tôi",
   "connect": "Kết nối",
   "all_rights_reserved": "Tất cả quyền được bảo lưu.",
   "no_active_patient_case": "Không có ca bệnh đang hoạt động",
   "please_wait_for_patient": "Vui lòng chờ bệnh nhân yêu cầu tư vấn hoặc chọn một ca có sẵn.",
   "return_to_home": "Quay về Trang chủ",
-  "doctor_dashboard": "Bảng điều khiển Bác sĩ",
   "doctor_view": "Chế độ Bác sĩ",
   "patient_information": "Thông tin bệnh nhân",
   "age_label": "Tuổi:",
@@ -66,26 +63,13 @@
   "condition_label": "Tình trạng:",
   "confidence_label": "Độ tin cậy:",
   "ai_notes_label": "Ghi chú AI:",
-  "type_your_response": "Nhập phản hồi của bạn..."
-  ,
+  "type_your_response": "Nhập phản hồi của bạn...",
   "case_attachments": "Tệp đính kèm của ca bệnh",
   "no_additional_notes": "Không có ghi chú bổ sung",
   "welcome_message": "Xin chào! Tôi là trợ lý da liễu của bạn. Tôi có thể giúp gì cho bạn hôm nay?",
   "alternative_treatments": "Những phương pháp điều trị thay thế cho tình trạng của tôi là gì?",
   "learn_more": "Bạn có thể cho tôi biết thêm về tình trạng này không?",
   "ask_specialist": "Khi nào tôi nên tư vấn chuyên gia?",
-  "azure_alt": "Logo Azure",
-  "ai_foundry_alt": "Logo AI Foundry",
-
-  "team.comphortine.role": "Trưởng nhóm phát triển | Kỹ sư AI | Đam mê Học sâu | Hệ thống thông minh | Django",
-  "team.comphortine.desc": "Trưởng nhóm phát triển và Kỹ sư AI tập trung xây dựng hệ thống thông minh. Đam mê Học sâu, thiết kế giải pháp AI và tạo mô hình mạnh mẽ. Có kinh nghiệm với Django REST và ứng dụng web tích hợp AI.",
-
-  "team.sheldon.role": "Quản lý dự án & Kỹ sư Cloud | Frontend | Backend | Kỹ sư DL/ML | Tích hợp AI | Full-stack",
-  "team.sheldon.desc": "Dẫn dắt điều phối công việc, quản lý tiến độ và đảm bảo mục tiêu dự án. Chuyên cấu hình dịch vụ Microsoft Azure và thiết lập tài nguyên đám mây. Đam mê xây dựng ứng dụng hiện đại tập trung vào trải nghiệm người dùng.",
-
-  "team.melvins.role": "Thiết kế UI/UX & Frontend Developer | Chuyên gia CNTT | MERN & PERN | AI & ML",
-  "team.melvins.desc": "Chuyên gia CNTT với kinh nghiệm trong MERN và PERN, xây dựng ứng dụng web động, mở rộng. Nền tảng mạnh về AI và ML, tận dụng công nghệ này để tạo giải pháp dữ liệu. Sử dụng Tailwind CSS và React để đem lại trải nghiệm mượt mà.",
-
   "physician_response_label": "PHẢN HỒI BÁC SĨ:",
   "diagnosis_label": "CHẨN ĐOÁN",
   "connecting_you_to_physician": "Đang kết nối bạn với bác sĩ...",
@@ -95,6 +79,11 @@
   "you_label": "Bạn",
   "unknown_condition": "Tình trạng chưa xác định",
   "unknown": "Chưa xác định",
-  "no_diagnosis_available": "Không có chẩn đoán sẵn có"
+  "no_diagnosis_available": "Không có chẩn đoán sẵn có",
+  "powered_by_ai": "Được hỗ trợ bởi AI",
+  "analysis_complete": "Phân tích hoàn tất dựa trên dữ liệu bệnh nhân:\n- Tình trạng chính: {{condition}}\n- Độ tin cậy: {{confidence}}%\n- Triệu chứng: {{symptoms}}\n\nCác bước tiếp theo được đề xuất: Xem lại lịch sử bệnh nhân và cung cấp kế hoạch điều trị",
+  "years": "{{age}} tuổi",
+  "no_active_chat_session": "Không có phiên trò chuyện nào đang hoạt động",
+  "patient_condition_alt": "Tình trạng bệnh nhân"
 }
 

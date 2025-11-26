@@ -3,6 +3,7 @@ from .settings import *
 from .settings import BASE_DIR
 from dotenv import load_dotenv
 load_dotenv()
+from django.utils.translation import gettext_lazy as _
 
 # original
 # ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
@@ -21,9 +22,9 @@ SECRET_KEY = "hQ4YQD9pEcuB7e+7/a8HKWqdfXhI2tW/RCJT4PRzMCM="
 
 # Validate required variables
 if not WEBSITE_HOSTNAME:
-    raise ValueError("WEBSITE_HOSTNAME environment variable is missing! Check Azure App Settings.")
+    raise ValueError(_("WEBSITE_HOSTNAME environment variable is missing! Check Azure App Settings."))
 if not SECRET_KEY:
-    raise ValueError("MY_SECRET_KEY environment variable is missing! Check Azure App Settings.")
+    raise ValueError(_("MY_SECRET_KEY environment variable is missing! Check Azure App Settings."))
 
 ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
 CSRF_TRUSTED_ORIGINS = ['https://purple-river-00fd8ef0f.6.azurestaticapps.net']

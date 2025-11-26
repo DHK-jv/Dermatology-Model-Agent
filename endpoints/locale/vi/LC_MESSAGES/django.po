@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Dermatology Assistant\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-26 14:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Vietnamese <vi@li.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: assistant/views.py
+msgid "Possible {d} detected ({c:.1f}% confidence). For better accuracy:\n1. Upload a clearer, closer photo\n2. Ensure good lighting\n3. Consult a dermatologist"
+msgstr "Có thể phát hiện {d} ({c:.1f}% độ tin cậy). Để có độ chính xác tốt hơn:\n1. Tải lên ảnh rõ ràng, gần hơn\n2. Đảm bảo ánh sáng tốt\n3. Tham khảo ý kiến của bác sĩ da liễu"
+
+#: assistant/views.py
+msgid "Explain this diagnosis"
+msgstr "Giải thích chẩn đoán này"
+
+#: assistant/views.py
+msgid "Chat processing failed: {err}"
+msgstr "Xử lý chat thất bại: {err}"
+
+#: assistant/views.py
+msgid "Server error: {err}"
+msgstr "Lỗi máy chủ: {err}"
+
+#: assistant/views.py
+msgid "I specialize only in dermatology and skin health questions. Please ask me about skin conditions, treatments, or related medical concerns."
+msgstr "Tôi chỉ chuyên về các câu hỏi về da liễu và sức khỏe da. Vui lòng hỏi tôi về các bệnh da, cách điều trị hoặc các vấn đề y tế liên quan."
+
+#: assistant/views.py
+msgid "I found these dermatologists matching your query:\n{list}"
+msgstr "Tôi đã tìm thấy những bác sĩ da liễu phù hợp với truy vấn của bạn:\n{list}"
+
+#: assistant/views.py
+msgid "I couldn't find dermatologists matching your criteria. Would you like to expand your search?"
+msgstr "Tôi không thể tìm thấy bác sĩ da liễu phù hợp với tiêu chí của bạn. Bạn có muốn mở rộng tìm kiếm?"
+
+#: assistant/views.py
+msgid "Could not process the image. Please try again with a clearer photo."
+msgstr "Không thể xử lý ảnh. Vui lòng thử lại với ảnh rõ ràng hơn."
+
+#: assistant/views.py
+msgid "Search error: {err}"
+msgstr "Lỗi tìm kiếm: {err}"
+
+#: assistant/views.py
+msgid "Failed to save interaction: {err}"
+msgstr "Không lưu được tương tác: {err}"
+
+#: assistant/views.py
+msgid "Data sent to fabrics."
+msgstr "Dữ liệu đã được gửi đến fabrics."
+
+#: assistant/views.py
+msgid "Kafka failed: {err}"
+msgstr "Kafka thất bại: {err}"
+
+#: api/deployment.py
+msgid "WEBSITE_HOSTNAME environment variable is missing! Check Azure App Settings."
+msgstr "Biến môi trường WEBSITE_HOSTNAME bị thiếu! Kiểm tra cài đặt Azure App."
+
+#: api/deployment.py
+msgid "MY_SECRET_KEY environment variable is missing! Check Azure App Settings."
+msgstr "Biến môi trường MY_SECRET_KEY bị thiếu! Kiểm tra cài đặt Azure App."
